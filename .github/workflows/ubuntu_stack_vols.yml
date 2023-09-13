@@ -222,6 +222,7 @@ jobs:
                fi ; \
             done
         - name: Test Cache and Async VOL - make ptest
+          timeout-minutes: 5
           if: ${{ success() }}
           run: |
             cd ${GITHUB_WORKSPACE}
@@ -361,6 +362,9 @@ jobs:
             # Start async execution at dataset close time
             export HDF5_ASYNC_EXE_DCLOSE=1
             make -s ptest
+        - name: Setup tmate session
+          if: ${{ failure() }}
+          uses: mxschmitt/action-tmate@v3
         - name: make distclean
           if: ${{ always() }}
           run: |

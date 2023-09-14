@@ -222,7 +222,7 @@ jobs:
                fi ; \
             done
         - name: Test Cache and Async VOL - make ptest
-          timeout-minutes: 1
+          timeout-minutes: 5
           if: ${{ success() }}
           run: |
             cd ${GITHUB_WORKSPACE}

@@ -248,6 +248,7 @@ jobs:
             make -s ptest
             unset TEST_NATIVE_VOL_ONLY
         - name: Test stacking Log VOL on top of Cache VOL only - make check
+          timeout-minutes: 2
           if: ${{ success() }}
           run: |
             cd ${GITHUB_WORKSPACE}
@@ -283,6 +284,7 @@ jobs:
                fi ; \
             done
         - name: Test stacking Log VOL on top of Cache VOL only - make ptest
+          timeout-minutes: 2
           if: ${{ success() }}
           run: |
             cd ${GITHUB_WORKSPACE}
@@ -306,6 +308,7 @@ jobs:
             export HDF5_ASYNC_EXE_DCLOSE=1
             make -s ptest
         - name: Test stacking Log VOL on top of Cache and Async VOL - make check
+          timeout-minutes: 2
           if: ${{ success() }}
           run: |
             cd ${GITHUB_WORKSPACE}
@@ -341,6 +344,7 @@ jobs:
                fi ; \
             done
         - name: Test stacking Log VOL on top of Cache and Async VOL - make ptest
+          timeout-minutes: 2
           if: ${{ success() }}
           run: |
             cd ${GITHUB_WORKSPACE}

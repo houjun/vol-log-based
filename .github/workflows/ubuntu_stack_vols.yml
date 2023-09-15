@@ -24,12 +24,12 @@ env:
    MPICH_VERSION: 4.1.2
    HDF5_VERSION: 1.14.2
    ARGOBOTS_VERSION: 1.1
-   ASYNC_VOL_VERSION: 1.8
+   ASYNC_VOL_VERSION: 1.8.1
 
 jobs:
     build:
       runs-on: ubuntu-latest
-      timeout-minutes: 60
+      timeout-minutes: 120
       steps:
         - uses: actions/checkout@v3
         - name: Set up dependencies
@@ -186,6 +186,7 @@ jobs:
             cd ${GITHUB_WORKSPACE}
             make -s ptest
         - name: Test Cache and Async VOL - make check
+          timeout-minutes: 2
           if: ${{ success() }}
           run: |
             cd ${GITHUB_WORKSPACE}
@@ -222,6 +223,7 @@ jobs:
                fi ; \
             done
         - name: Test Cache and Async VOL - make ptest
+          timeout-minutes: 2
           if: ${{ success() }}
           run: |
             cd ${GITHUB_WORKSPACE}
@@ -246,6 +248,7 @@ jobs:
             make -s ptest
             unset TEST_NATIVE_VOL_ONLY
         - name: Test stacking Log VOL on top of Cache VOL only - make check
+          timeout-minutes: 2
           if: ${{ success() }}
           run: |
             cd ${GITHUB_WORKSPACE}
@@ -281,6 +284,7 @@ jobs:
                fi ; \
             done
         - name: Test stacking Log VOL on top of Cache VOL only - make ptest
+          timeout-minutes: 2
           if: ${{ success() }}
           run: |
             cd ${GITHUB_WORKSPACE}
@@ -304,6 +308,7 @@ jobs:
             export HDF5_ASYNC_EXE_DCLOSE=1
             make -s ptest
         - name: Test stacking Log VOL on top of Cache and Async VOL - make check
+          timeout-minutes: 2
           if: ${{ success() }}
           run: |
             cd ${GITHUB_WORKSPACE}
@@ -339,6 +344,7 @@ jobs:
                fi ; \
             done
         - name: Test stacking Log VOL on top of Cache and Async VOL - make ptest
+          timeout-minutes: 2
           if: ${{ success() }}
           run: |
             cd ${GITHUB_WORKSPACE}
@@ -361,6 +367,9 @@ jobs:
             # Start async execution at dataset close time
             export HDF5_ASYNC_EXE_DCLOSE=1
             make -s ptest
+        - name: Setup tmate session
+          if: ${{ failure() }}
+          uses: mxschmitt/action-tmate@v3
         - name: make distclean
           if: ${{ always() }}
           run: |
